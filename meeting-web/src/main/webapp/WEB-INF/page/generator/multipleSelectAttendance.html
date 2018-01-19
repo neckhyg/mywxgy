@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<!--
+<script src="jquery-2.1.1.min.js" type="text/javascript" charset="utf-8"></script>     -->
+<script src="${rc.contextPath}/statics/libs/jquery.min.js"></script>
+<link rel="stylesheet" href="${rc.contextPath}/statics/css/bootstrap.min.css">
+<!--
+<link rel="stylesheet" type="text/css" href="bootstrap.css">           -->
+<script type="text/javascript">
+
+</script>
+<html lang="">
+
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3">
+            <label>部门：</label>
+            <select name="bigname" id="bigname" class="form-control">
+                <option value="1">院办</option>
+                <option value="2">组织人事处</option>
+                <option value="3">信息中心</option>
+            </select>
+        </div>
+        <div class="col-sm-3">
+            <label>人员名单：</label>
+            <select name="smallname[]" id="smallname" multiple="" class="form-control">
+            </select>
+        </div>
+        <div class="col-sm-3">
+            <button type="button" id="add" class="btn btn-success">添加</button>
+        </div>
+        <div class="col-sm-3">
+            <label>结果：</label>
+            <select name="result[]" id="result" multiple="" class="form-control">
+            </select>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <button type="button" id="submit" class="btn btn-success">提交</button>
+    </div>
+</div>
+
+<script src="${rc.contextPath}/js/generator/multipleSelectAttendance.js?_${date.systemTime}"></script>
+</body>
+
+</html>
+

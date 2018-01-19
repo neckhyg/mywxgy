@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="io.meeting.dao.MeetingInfoDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="io.meeting.entity.MeetingInfoEntity" id="meetingInfoMap">
+        <result property="id" column="id"/>
+        <result property="meetingno" column="meetingNo"/>
+        <result property="meetingname" column="meetingName"/>
+        <result property="meetinglocation" column="meetingLocation"/>
+        <result property="meetingdate" column="meetingDate"/>
+        <result property="chairman" column="chairMan"/>
+        <result property="attendanceid" column="attendanceID"/>
+        <result property="meetingstatus" column="meetingStatus"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="io.meeting.entity.MeetingInfoEntity">
+		select * from meeting_info where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="io.meeting.entity.MeetingInfoEntity">
+		select * from meeting_info
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from meeting_info 
+	</select>
+	 
+	<insert id="save" parameterType="io.meeting.entity.MeetingInfoEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into meeting_info
+		(
+			`meetingNo`, 
+			`meetingName`, 
+			`meetingLocation`, 
+			`meetingDate`, 
+			`chairMan`, 
+			`attendanceID`, 
+			`meetingStatus`
+		)
+		values
+		(
+			#{meetingno}, 
+			#{meetingname}, 
+			#{meetinglocation}, 
+			#{meetingdate}, 
+			#{chairman}, 
+			#{attendanceid}, 
+			#{meetingstatus}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="io.meeting.entity.MeetingInfoEntity">
+		update meeting_info 
+		<set>
+			<if test="meetingno != null">`meetingNo` = #{meetingno}, </if>
+			<if test="meetingname != null">`meetingName` = #{meetingname}, </if>
+			<if test="meetinglocation != null">`meetingLocation` = #{meetinglocation}, </if>
+			<if test="meetingdate != null">`meetingDate` = #{meetingdate}, </if>
+			<if test="chairman != null">`chairMan` = #{chairman}, </if>
+			<if test="attendanceid != null">`attendanceID` = #{attendanceid}, </if>
+			<if test="meetingstatus != null">`meetingStatus` = #{meetingstatus}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from meeting_info where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from meeting_info where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
