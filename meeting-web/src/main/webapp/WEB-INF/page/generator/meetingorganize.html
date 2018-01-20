@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<!--
+<script src="jquery-2.1.1.min.js" type="text/javascript" charset="utf-8"></script>     -->
+<script src="${rc.contextPath}/statics/libs/jquery.min.js"></script>
+<link rel="stylesheet" href="${rc.contextPath}/statics/css/bootstrap.min.css">
+<!--
+<link rel="stylesheet" type="text/css" href="bootstrap.css">           -->
+<script type="text/javascript">
+//    function getSelectVal() {
+////获取后台json数据
+//        var url ="../meetingteacher/listbydeptno/"+$("#deptName").val();
+//        $.ajax({
+//            type: "GET",
+//            url: url,
+//            datatype: "json",
+//            // data: JSON.stringify(vm.selectattendance),
+//            success: function(r){
+//                var ret =  JSON.parse(r);
+//                var teachername = $("#teachername");
+//                $("option", teachername).remove(); //清空原有的选项
+//                $.each(ret.list, function(index, array) {
+//                    var option = "<option value='" + array['userid'] + "'>" + array['name'] + "</option>";
+//                    teachername.append(option);
+//                });
+//            }
+//        });
+//
+//    }
+//    // 选择上级菜单选项触发事件
+//    $(function() {
+//        getSelectVal();
+//        $("#deptName").change(function() {
+//            getSelectVal();
+//        });
+//    });
+    //点击添加，获取选中选项的value和text
+    $(document).ready(function() {
+        $("#add").click(function() {
+            var result = $("#result");
+            $("#teachername option:selected").each(function(){
+                console.log($(this).val() + $(this).text());
+                var option = "<option value='" + $(this).val() + "' selected=\"selected\">" + $(this).text() + "</option>";
+                result.append(option);
+            });
+        });
+    });
+
+//    $(function(){
+//        $.post("../meetingorganize/list",
+////                {selectId:1},
+//                function(r){
+//                    var data =  JSON.parse(r);
+//                    $("#deptName").empty();
+//                    var str="";
+//                    for(var i=0;i<data.list.length;i++){
+//                        str+="<option value='"+data.list[i].deptNO+"'>"+data.list[i].deptName+"</option>"
+//                    }
+//                    //	alert(str);
+//                    $("#deptName").html(str);
+//                    $("#deptName").val(1);
+//                },
+//                "json");
+//    });
+</script>
+<html lang="">
+
+<body>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3">
+            <label>部门：</label>
+            <select name="deptName" id="deptName" class="form-control" onchange="onchangeSelectDeptNO(this.value)">>
+                <option value="1">院办</option>
+                <option value="2">组织人事处</option>
+                <option value="3">信息中心</option>
+            </select>
+        </div>
+        <div class="col-sm-3">
+            <label>人员名单：</label>
+            <select name="teachername[]" id="teachername" multiple=""  style="width:100%; height:100%;">
+            </select>
+        </div>
+        <div class="col-sm-3">
+            <button type="button" id="add" class="btn btn-success">添加</button>
+        </div>
+        <div class="col-sm-3">
+            <label>结果：</label>
+            <select name="result[]" id="result" multiple="" class="form-control">
+            </select>
+        </div>
+    </div>
+    <div class="col-sm-3">
+        <button type="button" id="submit" class="btn btn-success">提交</button>
+    </div>
+</div>
+
+<!--<script src="${rc.contextPath}/js/generator/multipleSelectAttendance.js?_${date.systemTime}"></script>-->
+<script>
+$(function(){
+$.post("../meetingorganize/list2",
+//                {selectId:1},
+function(r){
+//var data =  JSON.parse(r);
+$("#deptName").empty();
+var str="";
+//    $.each(r.list2, function(index, array) {
+//        var option = "<option value='" + array['deptNO'] + "'>" + array['deptName'] + "</option>";
+//        deptName.append(option);
+//    });
+for(var i=0;i<r.list2.length;i++){
+str+="<option value='"+r.list2[i].deptno+"'>"+r.list2[i].deptname+"</option>"
+}
+//	alert(str);
+$("#deptName").html(str);
+$("#deptName").val(01);
+},
+"json");
+});
+function getSelectVal() {
+//获取后台json数据
+    var deptNo =    $("#deptName").val();
+    var url ="../meetingteacher/listbydeptno/"+ deptNo;
+    $.ajax({
+        type: "GET",
+        url: url,
+        datatype: "json",
+        // data: JSON.stringify(vm.selectattendance),
+        success: function(r){
+            var ret =  JSON.parse(r);
+            var teachername = $("#teachername");
+            $("option", teachername).remove(); //清空原有的选项
+            $.each(ret.list, function(index, array) {
+                var option = "<option value='" + array['userid'] + "'>" + array['name'] + "</option>";
+                teachername.append(option);
+            });
+        }
+    });
+
+}
+function onchangeSelectDeptNO(id){
+//   	alert(id);
+    $("#deptName").val(id);
+    getSelectVal();
+}
+</script>
+</body>
+
+</html>
+

@@ -1,17 +1,16 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../meetinginfo/list',
+        url: '../meetingteacher/list',
         datatype: "json",
         colModel: [			
-		//	{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
-			{ label: '会议编号', name: 'meetingno', index: 'meetingNo', width: 80 },
-			{ label: '会议名称', name: 'meetingname', index: 'meetingName', width: 80 },
-			{ label: '地点', name: 'meetinglocation', index: 'meetingLocation', width: 80 },
-			{ label: '时间', name: 'meetingdate', index: 'meetingDate', width: 80 },
-			{ label: '主持人', name: 'chairman', index: 'chairMan', width: 80 },
-			//{ label: '', name: 'attendanceid', index: 'attendanceID', width: 80 },
-			{ label: '状态', name: 'meetingstatus', index: 'meetingStatus', width: 80 }  ,
-            {label: '参会名单',name:'ViewDetail',index:'detail', width:50,align:"center"}
+			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
+			{ label: '', name: 'userid', index: 'userID', width: 80 }, 			
+			{ label: '', name: 'name', index: 'Name', width: 80 }, 			
+			{ label: '', name: 'sex', index: 'Sex', width: 80 }, 			
+			{ label: '', name: 'post', index: 'POST', width: 80 }, 			
+			{ label: '', name: 'deptno', index: 'deptNO', width: 80 }, 			
+			{ label: '', name: 'mobilephone', index: 'mobilePhone', width: 80 }, 			
+			{ label: '', name: 'email', index: 'email', width: 80 }			
         ],
 		viewrecords: true,
         height: 385,
@@ -35,33 +34,17 @@ $(function () {
         },
         gridComplete:function(){
         	//隐藏grid底部滚动条
-            //隐藏grid底部滚动条
-            var ids = jQuery("#jqGrid").jqGrid('getDataIDs');
-
-            for ( var i = 0; i < ids.length; i++) {
-
-                var id = ids[i];
-
-                detail ="<a href='#' style='color:#f60' onclick='ViewDetail("+ id +")' >添加参会人员</a>";
-
-                jQuery("#jqGrid").jqGrid('setRowData', ids[i], { ViewDetail: detail });
-            }
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
         }
     });
 });
-function ViewDetail(id) {
 
-    //  window.location.href = "view_check_report_detail.action?checkReportId=" + id;
-//alert(id);
-    window.location.href = "http://localhost:8090/generator/meetingorganize.html" ;
-}
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
 		showList: true,
 		title: null,
-		meetingInfo: {}
+		meetingTeacher: {}
 	},
 	methods: {
 		query: function () {
@@ -70,7 +53,7 @@ var vm = new Vue({
 		add: function(){
 			vm.showList = false;
 			vm.title = "新增";
-			vm.meetingInfo = {};
+			vm.meetingTeacher = {};
 		},
 		update: function (event) {
 			var id = getSelectedRow();
@@ -83,11 +66,11 @@ var vm = new Vue({
             vm.getInfo(id)
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.meetingInfo.id == null ? "../meetinginfo/save" : "../meetinginfo/update";
+			var url = vm.meetingTeacher.id == null ? "../meetingteacher/save" : "../meetingteacher/update";
 			$.ajax({
 				type: "POST",
 			    url: url,
-			    data: JSON.stringify(vm.meetingInfo),
+			    data: JSON.stringify(vm.meetingTeacher),
 			    success: function(r){
 			    	if(r.code === 0){
 						alert('操作成功', function(index){
@@ -108,7 +91,7 @@ var vm = new Vue({
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: "../meetinginfo/delete",
+				    url: "../meetingteacher/delete",
 				    data: JSON.stringify(ids),
 				    success: function(r){
 						if(r.code == 0){
@@ -123,8 +106,8 @@ var vm = new Vue({
 			});
 		},
 		getInfo: function(id){
-			$.get("../meetinginfo/info/"+id, function(r){
-                vm.meetingInfo = r.meetingInfo;
+			$.get("../meetingteacher/info/"+id, function(r){
+                vm.meetingTeacher = r.meetingTeacher;
             });
 		},
 		reload: function (event) {

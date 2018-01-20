@@ -36,3 +36,19 @@ $(document).ready(function() {
         });
 });
 });
+
+$(function(){
+            $.post("../meetingorganize/list",
+                {selectId:1},
+                function(data){
+            $("#deptName").empty();
+            var str="";
+            for(var i=0;i<data.length;i++){
+                str+="<option value='"+data[i].deptNO+"'>"+data[i].deptName+"</option>"
+            }
+            //	alert(str);
+            $("#deptName").html(str);
+            $("#deptName").val(1);
+        },
+        "json");
+});
