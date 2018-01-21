@@ -1,21 +1,18 @@
 package io.meeting.controller;
 
-import java.util.List;
-import java.util.Map;
-
-import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
+import io.meeting.entity.MeetingInfoEntity;
 import io.meeting.entity.MeetingRecordEntity;
+import io.meeting.service.MeetingInfoService;
 import io.meeting.service.MeetingRecordService;
 import io.meeting.utils.PageUtils;
 import io.meeting.utils.Query;
 import io.meeting.utils.R;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -30,6 +27,8 @@ import io.meeting.utils.R;
 public class MeetingRecordController {
 	@Autowired
 	private MeetingRecordService meetingRecordService;
+    @Autowired
+    private MeetingInfoService meetingInfoService;
 	
 	/**
 	 * 列表
@@ -70,7 +69,29 @@ public class MeetingRecordController {
 		
 		return R.ok();
 	}
-	
+    @RequestMapping("/groupsave")
+    @RequiresPermissions("meetingrecord:groupsave")
+    public R groupsave(Integer meetingno,String idGroup,String nameGroup){
+        MeetingInfoEntity meetingInfo = meetingInfoService.queryObject(meetingno) ;
+        String[] idgroup =  idGroup.split(",");
+        String[] namegroup =  nameGroup.split(",");
+        for (int i = 0; i< idgroup.length;i++){
+            MeetingRecordEntity    meetingRecord = new MeetingRecordEntity();
+            meetingRecord.setMeetingno(meetingInfo.getMeetingno());
+            meetingRecord.setMeetingname(meetingInfo.getMeetingname());
+            meetingRecord.setMeetingdate(meetingInfo.getMeetingdate());
+            meetingRecord.setMeetinglocation(meetingInfo.getMeetinglocation());
+            meetingRecord.setChairman(meetingInfo.getChairman());
+            meetingRecord.setSignstatus("未签到");
+            meetingRecord.setAttendanceid(idgroup[i]);
+            meetingRecord.setAttendancename(namegroup[i]);
+            meetingRecordService.save(meetingRecord);
+        }
+//        MeetingRecordEntity    meetingRecord = new MeetingRecordEntity();
+//        meetingRecordService.save(meetingRecord);
+
+        return R.ok();
+    }
 	/**
 	 * 修改
 	 */

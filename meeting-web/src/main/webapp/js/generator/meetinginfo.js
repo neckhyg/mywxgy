@@ -41,7 +41,10 @@ $(function () {
             for ( var i = 0; i < ids.length; i++) {
 
                 var id = ids[i];
-
+                var rowData = $("#jqGrid").getRowData(id);  //1.获取选中行的数据
+//                var status = rowData.inStatus;//2.得到选中数据的某个属性
+//                var meetingno = "xg0001";//rowData.meetingno;
+//                        alert(meetingno)   ;
                 detail ="<a href='#' style='color:#f60' onclick='ViewDetail("+ id +")' >添加参会人员</a>";
 
                 jQuery("#jqGrid").jqGrid('setRowData', ids[i], { ViewDetail: detail });
@@ -54,7 +57,10 @@ function ViewDetail(id) {
 
     //  window.location.href = "view_check_report_detail.action?checkReportId=" + id;
 //alert(id);
-    window.location.href = "http://localhost:8090/generator/meetingorganize.html" ;
+//    var rowData = $("#jqGrid").getRowData(id);  //1.获取选中行的数据
+//                var status = rowData.inStatus;//2.得到选中数据的某个属性
+//    var meetingNo = rowData.meetingno;
+    window.location.href = "http://localhost:8090/generator/meetingorganize.html?meetingno=" +id ;
 }
 var vm = new Vue({
 	el:'#rrapp',

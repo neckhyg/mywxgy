@@ -90,32 +90,32 @@
         </div>
     </div>
     <div class="col-sm-3">
-        <button type="button" id="submit" class="btn btn-success">提交</button>
+        <button type="button" id="attendanceList" class="btn btn-success">提交</button>
     </div>
 </div>
 
 <!--<script src="${rc.contextPath}/js/generator/multipleSelectAttendance.js?_${date.systemTime}"></script>-->
 <script>
-$(function(){
-$.post("../meetingorganize/list2",
-//                {selectId:1},
-function(r){
-//var data =  JSON.parse(r);
-$("#deptName").empty();
-var str="";
-//    $.each(r.list2, function(index, array) {
-//        var option = "<option value='" + array['deptNO'] + "'>" + array['deptName'] + "</option>";
-//        deptName.append(option);
-//    });
-for(var i=0;i<r.list2.length;i++){
-str+="<option value='"+r.list2[i].deptno+"'>"+r.list2[i].deptname+"</option>"
-}
-//	alert(str);
-$("#deptName").html(str);
-$("#deptName").val(01);
-},
-"json");
-});
+        $(function(){
+        $.post("../meetingorganize/list2",
+        //                {selectId:1},
+        function(r){
+        //var data =  JSON.parse(r);
+        $("#deptName").empty();
+        var str="";
+        //    $.each(r.list2, function(index, array) {
+        //        var option = "<option value='" + array['deptNO'] + "'>" + array['deptName'] + "</option>";
+        //        deptName.append(option);
+        //    });
+        for(var i=0;i<r.list2.length;i++){
+        str+="<option value='"+r.list2[i].deptno+"'>"+r.list2[i].deptname+"</option>"
+        }
+        //	alert(str);
+        $("#deptName").html(str);
+        $("#deptName").val(01);
+        },
+        "json");
+        });
 function getSelectVal() {
 //获取后台json数据
     var deptNo =    $("#deptName").val();
@@ -142,6 +142,70 @@ function onchangeSelectDeptNO(id){
     $("#deptName").val(id);
     getSelectVal();
 }
+        function getQueryStringV(vhref, name) {
+            // 如果链接没有参数，或者链接中不存在我们要获取的参数，直接返回空
+            if (vhref.indexOf("?") == -1 || vhref.indexOf(name + '=') == -1) {
+                return null;
+            }
+            // 获取链接中参数部分
+            var queryString = vhref.substring(vhref.indexOf("?") + 1);
+            // 分离参数对 ?key=value&key2=value2
+            var parameters = queryString.split("&");
+            var pos, paraName, paraValue;
+            for (var i = 0; i < parameters.length; i++) {
+                // 获取等号位置
+                pos = parameters[i].indexOf('=');
+                if (pos == -1) {
+                    continue;
+                }
+                // 获取name 和 value
+                paraName = parameters[i].substring(0, pos);
+                paraValue = parameters[i].substring(pos + 1);
+
+                if (paraName == name) {
+                    return unescape(paraValue.replace(/\+/g, " "));
+                }
+            }
+            return null;
+        }
+        function getSelectedTeacherValues(){
+            var selectedValues = "";
+
+            var meetingno = getQueryStringV(location.href, "meetingno");
+            var realvalues = [];
+            var textvalues = [];
+            $('#result :selected').each(function(i, selected) {
+                realvalues[i] = $(selected).val();
+                textvalues[i] = $(selected).text();
+            });
+            alert( "你选中的会议编号： " + meetingno + "你选中的值为：" + realvalues+ "你选中的教师为：" + textvalues);
+//            var deptNo =    $("#deptName").val();
+            var data = "meetingno="+meetingno+"&idGroup="+realvalues+"&nameGroup="+textvalues;
+            var url ="../meetingrecord/groupsave";
+            $.ajax({
+                type: "GET",
+                url: url,
+                data: data,
+                datatype: "json",
+                // data: JSON.stringify(vm.selectattendance),
+                success: function(r){
+                    var ret =  JSON.parse(r);
+                    if(ret.code == 0){//登录成功
+//                        parent.location.href ='index.html';
+                        window.location.href = "http://localhost:8090/generator/meetingrecord.html"
+                        alert("success!") ;
+                    }
+                    else{
+                        alert("failed！");
+                    }
+                }
+            });
+        }
+     $(document).ready(function() {
+            $("#attendanceList").click(function() {
+                getSelectedTeacherValues();
+            });
+        });
 </script>
 </body>
 
