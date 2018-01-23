@@ -99,4 +99,9 @@
         <!--limit #{offset}, #{limit}-->
         <!--</if>-->
     </select>
+    <select id="queryObjectByCode" parameterType="String" resultType="io.meeting.entity.MeetingTeacherEntity">
+        select * from meeting_teacher    where userID = #{userid}
+
+    </select>
+
 </mapper>

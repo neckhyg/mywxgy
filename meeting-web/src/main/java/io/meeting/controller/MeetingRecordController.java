@@ -2,14 +2,17 @@ package io.meeting.controller;
 
 import io.meeting.entity.MeetingInfoEntity;
 import io.meeting.entity.MeetingRecordEntity;
+import io.meeting.entity.MeetingTeacherEntity;
 import io.meeting.service.MeetingInfoService;
 import io.meeting.service.MeetingRecordService;
+import io.meeting.service.MeetingTeacherService;
 import io.meeting.utils.PageUtils;
 import io.meeting.utils.Query;
 import io.meeting.utils.R;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import simplemail.MailTest2;
 
 import java.util.List;
 import java.util.Map;
@@ -29,6 +32,8 @@ public class MeetingRecordController {
 	private MeetingRecordService meetingRecordService;
     @Autowired
     private MeetingInfoService meetingInfoService;
+    @Autowired
+    private MeetingTeacherService meetingTeacherService;
 	
 	/**
 	 * 列表
@@ -69,6 +74,30 @@ public class MeetingRecordController {
 		
 		return R.ok();
 	}
+    private void sendMail(String userID, String msg){
+
+//        Mail mail = new Mail();
+//
+//        mail.setHost("smtp.wxgyxy.cn");
+//        mail.setSender("heyg@wxgyxy.cn");
+//        mail.setUsername("heyg@wxgyxy.cn");
+//        mail.setPassword("wxgy2013");
+
+        MeetingTeacherEntity meetingTeacherEntity = meetingTeacherService.queryObjectByUserId(userID);
+//        mail.setReceiver(meetingTeacherEntity.getEmail());
+//
+//        mail.setSubject("会议通知");
+//        mail.setMessage(msg);
+//        MailUtil util = new MailUtil();
+//        if(util.send(mail)){
+//
+//            return true;
+//        }else{
+//            return false;
+//        }
+        MailTest2.sendmail("smtp.sohu.com","neckx@sohu.com",meetingTeacherEntity.getEmail(),"会议通知",msg);
+
+   }
     @RequestMapping("/groupsave")
     @RequiresPermissions("meetingrecord:groupsave")
     public R groupsave(Integer meetingno,String idGroup,String nameGroup){
@@ -86,6 +115,10 @@ public class MeetingRecordController {
             meetingRecord.setAttendanceid(idgroup[i]);
             meetingRecord.setAttendancename(namegroup[i]);
             meetingRecordService.save(meetingRecord);
+              String msg =  namegroup[i]+"您有一个会议通知：" +   "\n会议名称： "+meetingInfo.getMeetingname()
+                           +"\n会议地点： "+meetingInfo.getMeetinglocation()
+                           +"\n会议时间：  "+  meetingInfo.getMeetingdate() ;
+            sendMail(idgroup[i],msg);
         }
 //        MeetingRecordEntity    meetingRecord = new MeetingRecordEntity();
 //        meetingRecordService.save(meetingRecord);

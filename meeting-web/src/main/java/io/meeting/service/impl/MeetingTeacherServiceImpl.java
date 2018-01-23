@@ -57,4 +57,9 @@ public class MeetingTeacherServiceImpl implements MeetingTeacherService {
         List<MeetingTeacherEntity> list = meetingTeacherDao.queryListByDeptID(deptno);
         return list;  //To change body of implemented methods use File | Settings | File Templates.
     }
+
+    @Override
+    public MeetingTeacherEntity queryObjectByUserId(String userId) {
+        return meetingTeacherDao.queryObjectByCode(userId);  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

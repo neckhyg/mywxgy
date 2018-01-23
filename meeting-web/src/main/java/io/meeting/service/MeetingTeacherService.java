@@ -29,4 +29,6 @@ public interface MeetingTeacherService {
 	void deleteBatch(Integer[] ids);
 
     List<MeetingTeacherEntity> queryListByDeptNO(String deptno);
+
+    MeetingTeacherEntity queryObjectByUserId(String userId);
 }
