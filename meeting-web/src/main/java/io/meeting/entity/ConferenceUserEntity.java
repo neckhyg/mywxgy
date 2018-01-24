@@ -8,8 +8,8 @@ import java.util.Date;
 /**
  * 
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
+ * @author neckhyg
+ * @email 497273569@qq.com
  * @date 2017-05-11 14:13:25
  */
 public class ConferenceUserEntity implements Serializable {

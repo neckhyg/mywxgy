@@ -5,8 +5,8 @@ import org.apache.commons.lang.StringUtils;
 
 /**
  * 数据校验
- * @author chenshun
- * @email sunlightcs@gmail.com
+ * @author neckhyg
+ * @email 497273569@qq.com
  * @date 2017-03-23 15:50
  */
 public abstract class Assert {

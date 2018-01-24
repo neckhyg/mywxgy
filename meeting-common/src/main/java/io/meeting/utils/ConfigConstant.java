@@ -2,8 +2,8 @@ package io.meeting.utils;
 
 /**
  * 系统参数相关Key
- * @author chenshun
- * @email sunlightcs@gmail.com
+ * @author neckhyg
+ * @email 497273569@qq.com
  * @date 2017-03-26 10:33
  */
 public class ConfigConstant {

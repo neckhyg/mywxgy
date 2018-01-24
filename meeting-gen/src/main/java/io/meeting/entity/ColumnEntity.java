@@ -3,8 +3,8 @@ package io.meeting.entity;
 /**
  * 列的属性
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
+ * @author neckhyg
+ * @email 497273569@qq.com
  * @date 2016年12月20日 上午12:01:45
  */
 public class ColumnEntity {

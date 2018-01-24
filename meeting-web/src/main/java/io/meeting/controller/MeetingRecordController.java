@@ -51,7 +51,12 @@ public class MeetingRecordController {
 		
 		return R.ok().put("page", pageUtil);
 	}
-	
+    @ResponseBody
+    @RequestMapping("/count")
+    // @RequiresPermissions("zfxsxxjbb:count")
+    public R count(@RequestParam Map<String, Object> params){
+        return null;
+    }
 	
 	/**
 	 * 信息

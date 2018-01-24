@@ -5,8 +5,8 @@ import io.meeting.entity.CzitQuestionEntity;
 /**
  * 
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
+ * @author neckhyg
+ * @email 497273569@qq.com
  * @date 2017-07-26 15:49:44
  */
 public interface CzitQuestionDao extends BaseDao<CzitQuestionEntity> {

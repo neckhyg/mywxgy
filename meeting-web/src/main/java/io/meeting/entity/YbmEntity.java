@@ -7,8 +7,8 @@ import java.io.Serializable;
 /**
  * 
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
+ * @author neckhyg
+ * @email 497273569@qq.com
  * @date 2017-07-28 15:33:03
  */
 public class YbmEntity implements Serializable {

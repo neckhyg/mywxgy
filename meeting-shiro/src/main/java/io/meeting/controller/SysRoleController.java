@@ -20,8 +20,8 @@ import java.util.Map;
 /**
  * 角色管理
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
+ * @author neckhyg
+ * @email 497273569@qq.com
  * @date 2016年11月8日 下午2:18:33
  */
 @RestController

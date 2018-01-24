@@ -5,8 +5,8 @@ import io.meeting.entity.ConferenceUserEntity;
 /**
  * 
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
+ * @author neckhyg
+ * @email 497273569@qq.com
  * @date 2017-03-02 09:56:17
  */
 public interface ConferenceUserDao extends BaseDao<ConferenceUserEntity> {

@@ -8,8 +8,8 @@ import org.apache.shiro.subject.Subject;
 /**
  * Shiro工具类
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
+ * @author neckhyg
+ * @email 497273569@qq.com
  * @date 2016年11月12日 上午9:49:19
  */
 public class ShiroUtils {

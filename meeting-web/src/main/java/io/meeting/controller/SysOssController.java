@@ -29,8 +29,8 @@ import com.alibaba.fastjson.JSON;
 /**
  * 文件上传
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
+ * @author neckhyg
+ * @email 497273569@qq.com
  * @date 2017-03-25 12:13:26
  */
 @RestController

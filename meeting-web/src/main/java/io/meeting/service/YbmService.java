@@ -8,8 +8,8 @@ import java.util.Map;
 /**
  * 
  * 
- * @author chenshun
- * @email sunlightcs@gmail.com
+ * @author neckhyg
+ * @email 497273569@qq.com
  * @date 2017-07-28 15:33:03
  */
 public interface YbmService {
